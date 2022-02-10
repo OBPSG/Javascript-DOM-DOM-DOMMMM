@@ -6,52 +6,108 @@ btn.style.display = "block";
 document.body.appendChild(btn);
 btn.addEventListener("click", addDiv);
 
-function addDiv(event){
+let container = document.createElement("div");
+container.classList.add("container");
+container.style.display = "flex"
+container.style.flexDirection = "row";
+container.style.flexWrap = "wrap"
+document.body.appendChild(container);
+
+function addDiv(event) {
     let div = document.createElement("div");
     div.style.backgroundColor = "black";
     div.style.height = "100px";
     div.style.width = "100px";
-    div.style.display = "inline-block";
+    div.style.display = "flex";
+    div.style.justifyContent = "center";
+    div.style.alignItems = "center";
     div.style.margin = "2px";
-    div.style.padding = "auto";
     div.classList.add("square");
-    
+
     numDivsAdded += 1;
     div.id = numDivsAdded.toString();
     let idNode = document.createElement("div");
     idNode.classList.add("idNode");
     idNode.appendChild(document.createTextNode(numDivsAdded.toString()));
     idNode.style.color = "white";
-    idNode.style.height = "100px";
     idNode.style.fontSize = "32px";
     idNode.style.display = "none";
-    idNode.style.justifyContent = "center";
-    idNode.style.alignItems = "center";
+    //idNode.style.width = "50px";
+    //idNode.style.width = "50px";
+
     div.appendChild(idNode);
 
     div.addEventListener("mouseenter", showId);
     div.addEventListener("mouseleave", hideId);
     div.addEventListener("click", setRandomColor);
-    document.body.appendChild(div);
+    div.addEventListener("dblclick", tryRemoveDiv);
+    container.appendChild(div);
 }
 
-function showId(event)
-{
+function showId(event) {
     // console.log(event)
     let target = event.target.querySelector(".idNode");
     // console.log(target);
     target.style.display = "flex";
 }
 
-function hideId(event)
-{
+function hideId(event) {
     let target = event.target.querySelector(".idNode");
     target.style.display = "none";
 }
 
-function setRandomColor(event)
-{
-    let colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet", "saddlebrown"];
-    let index = Math.round(Math.random()*7);
+function setRandomColor(event) {
+    let colors = [
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "indigo",
+        "violet",
+        "saddlebrown",
+    ];
+    let index = Math.round(Math.random() * 7);
     event.target.style.backgroundColor = colors[index];
+}
+
+function tryRemoveDiv(event) {
+    //let divs = document.querySelectorAll(".square");
+    let squares = document.getElementsByClassName("square");
+    console.log(squares);
+    let DivId = parseInt(event.target.id);
+    //console.log(DivId);
+
+    //find the position in the HTMLCollection the element that was clicked on exists in
+    //let targetedDivIndex = Array.prototype.findIndex.call(div => div.id = DivId)
+    let targetedDivIndex = -1;
+    for (let i = 0; i < squares.length; i++) {
+        if (squares[i].id == DivId.toString()) {
+            targetedDivIndex = i;
+            break;
+        }
+    }
+    console.log(targetedDivIndex);
+
+    //Check if div id is even or odd
+    if (DivId % 2 == 0) {
+        //grab div after the one that was clicked on, if it exists
+        let divToRemove = squares[targetedDivIndex + 1];
+        console.log(divToRemove);
+        if (divToRemove != undefined) {
+            divToRemove.remove();
+        } else {
+            alert("There needs to be a square after the one clicked on to delete!");
+        }
+    }
+    //try to delete square befoer the one clicked on because its id is odd
+    else {
+        let divToRemove = squares[targetedDivIndex - 1];
+        console.log(divToRemove);
+        if (divToRemove != undefined) {
+            divToRemove.remove();
+        } else {
+            alert("There needs to be a square before the one clicked on to delete!");
+        }
+    }
 }

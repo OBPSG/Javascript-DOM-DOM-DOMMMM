@@ -78,13 +78,11 @@ function tryRemoveDiv(event) {
             break;
         }
     }
-    console.log(targetedDivIndex);
 
     //Check if div id is even or odd
     if (DivId % 2 == 0) {
         //grab div after the one that was clicked on, if it exists
         let divToRemove = squares[targetedDivIndex + 1];
-        console.log(divToRemove);
         if (divToRemove != undefined) {
             divToRemove.remove();
         } else {
@@ -94,7 +92,6 @@ function tryRemoveDiv(event) {
     //try to delete square before the one clicked on because its id is odd
     else {
         let divToRemove = squares[targetedDivIndex - 1];
-        console.log(divToRemove);
         if (divToRemove != undefined) {
             divToRemove.remove();
         } else {

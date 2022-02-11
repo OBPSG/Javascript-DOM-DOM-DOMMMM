@@ -32,9 +32,6 @@ function addDiv(event) {
     idNode.style.color = "white";
     idNode.style.fontSize = "32px";
     idNode.style.display = "none";
-    //idNode.style.width = "50px";
-    //idNode.style.width = "50px";
-
     div.appendChild(idNode);
 
     div.addEventListener("mouseenter", showId);
@@ -45,9 +42,7 @@ function addDiv(event) {
 }
 
 function showId(event) {
-    // console.log(event)
     let target = event.target.querySelector(".idNode");
-    // console.log(target);
     target.style.display = "flex";
 }
 
@@ -72,14 +67,10 @@ function setRandomColor(event) {
 }
 
 function tryRemoveDiv(event) {
-    //let divs = document.querySelectorAll(".square");
     let squares = document.getElementsByClassName("square");
-    console.log(squares);
     let DivId = parseInt(event.target.id);
-    //console.log(DivId);
 
     //find the position in the HTMLCollection the element that was clicked on exists in
-    //let targetedDivIndex = Array.prototype.findIndex.call(div => div.id = DivId)
     let targetedDivIndex = -1;
     for (let i = 0; i < squares.length; i++) {
         if (squares[i].id == DivId.toString()) {
@@ -100,7 +91,7 @@ function tryRemoveDiv(event) {
             alert("There needs to be a square after the one clicked on to delete!");
         }
     }
-    //try to delete square befoer the one clicked on because its id is odd
+    //try to delete square before the one clicked on because its id is odd
     else {
         let divToRemove = squares[targetedDivIndex - 1];
         console.log(divToRemove);
